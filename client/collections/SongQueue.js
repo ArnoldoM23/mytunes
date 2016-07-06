@@ -7,20 +7,27 @@ var SongQueue = Songs.extend({
   this.on('ended',this.nextSong,this);
   },
 
-  enqueue: function(){
+  enqueue: function(song){
     if(this.length ===1){
       this.playFirst();
     }
   },
 
-  dequeue: function(){
-    this.at(0).remove()
+  dequeue: function(song){
+    // this.at(0).remove()
+    if(this.at(0) === song){
+      this.nextSong();
+    } else {
+      this.remove(song)
+    }
   },
   nextSong: function(){
     this.shift();
     if(this.length >= 1){
       this.playFirst()
-    } 
+    }  else {
+      this.trigger('stop');
+    }
   },
 
   playFirst: function(){
